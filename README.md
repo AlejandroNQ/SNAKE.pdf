@@ -19,7 +19,7 @@ The game itself is (mostly) coded in JavaScript using [Adobe's JS API](https://w
 
 
 ### PDF implementation:
-The embeding of the game inside a pdf file is probably the most interesting aspect of this whole project. It could be done simply by hand (uncompressed unprotected pdf files are actually quite simple) but it would require calculating byte offsets by hand which is, to say the least, a tedious task. Here, it's been done with [a python script](https://github.com/AlejandroNQ/SNAKE.pdf/blob/main/generate_snake.py) using the libreary [pdfrw](https://github.com/pmaupin/pdfrw) (and [a custom module](https://github.com/osnr/horrifying-pdf-experiments/blob/master/generate.py) by [Omar Rizwan](https://github.com/osnr)).
+The embeding of the game inside a pdf file is probably the most interesting aspect of this whole project. It could be done simply by hand (uncompressed unprotected pdf files are actually quite simple) but it would require calculating byte offsets by hand which is, to say the least, a tedious task. Here, it's been done with [a python script](https://github.com/AlejandroNQ/SNAKE.pdf/blob/main/generate_snake.py) using the library [pdfrw](https://github.com/pmaupin/pdfrw) (and [a custom module](https://github.com/osnr/horrifying-pdf-experiments/blob/master/generate.py) by [Omar Rizwan](https://github.com/osnr)).
 
 A few interesting challenges that arise from the limited API implementation by chromium browsers are:
 - Every element of the game is a text box (which means you can pause the game and write just about anything anywhere).
