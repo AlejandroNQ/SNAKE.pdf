@@ -1,6 +1,6 @@
-# [SNAKE.pdf](https://github.com/AlejandroNQ/SNAKE.pdf)
+# [SNAKE.pdf](https://alejandronq.github.io/SNAKE.pdf/snake.pdf)
 
-[SNAKE.pdf](): the classic you know know and love, now in pdf. Open your chromium based browser of choice and enjoy!
+[SNAKE.pdf](https://alejandronq.github.io/SNAKE.pdf/snake.pdf): the classic you know know and love, now in pdf. Open your chromium based browser of choice and enjoy!
 
 
 ### Snake
