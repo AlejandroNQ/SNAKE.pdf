@@ -7,6 +7,7 @@ SNAKE.pdf: the classic you know know and love now in pdf. Open your chromium bas
    ↑		 <- Speed ->
 ← ⏸ →
    ↓ 
+```
  
   -Hover your mouse over the arrows on the left to stir the snake
   -Click on the middle button to pause/resume game (you may have to click outside and then back inside to resume)
