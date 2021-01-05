@@ -105,14 +105,14 @@ fields.append(make_field(
     r=0.8, g=0.8, b=0.8
 ))
 
-# See `snake_KBI.js`: used to force rendering cleanup in Chrome.
+# See `snake.js`: used to force rendering cleanup in Chrome.
 fields.append(make_field(
     'whole', x=0, y=CANVAS_BOTTOM,
     width=CANVAS_WIDTH, height=CANVAS_HEIGHT,
     r=1, g=1, b=1
 ))
 
-with open('snake_KBI.js', 'r') as js_file:
+with open('snake.js', 'r') as js_file:
     script = js_file.read()
 
 # Share our constants with the JS script.
