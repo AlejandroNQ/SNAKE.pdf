@@ -7,15 +7,13 @@
 The game itself is (mostly) coded in JavaScript using [Adobe's JS API](https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/js_api_reference.pdf) or rather, [the small subset of it implemented by chromiumn browsers](https://pdfium.googlesource.com/pdfium/+/chromium/2524/fpdfsdk/src/javascript), although, as explained below, every game element is created with the pdf (which makes it look weird on non-chromium readers).
 
 **Controls:**
-``` 
-   ↑		 <- Speed ->
-← ⏸ →
-   ↓ 
-```
- 
-- Hover your mouse over the arrows on the left to stir the snake
-- Click on the middle button to pause/resume game (you may have to click outside and then back inside to resume)
-- Hover your mouse over the speed control arrows to make the snake move faster or slower. (does not work while paused)
+   Now supports keyboard imput. Click anywhere to start.
+   
+- Movement: WASD
+- Pause: SAPACE BAR
+- Unpause: Click on the "paused" message (KB imput disabled while paused)
+- Speed up: +
+- Speed down: -
 
 
 ### PDF implementation:
