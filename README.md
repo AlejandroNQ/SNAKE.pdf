@@ -6,7 +6,7 @@
 ### Snake
 The game itself is (mostly) coded in JavaScript using [Adobe's JS API](https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/js_api_reference.pdf) or rather, [the small subset of it implemented by chromiumn browsers](https://pdfium.googlesource.com/pdfium/+/chromium/2524/fpdfsdk/src/javascript), although, as explained below, every game element is created with the pdf (which makes it look weird on non-chromium readers).
 
-**Controls:**
+### Controls:
    Now supports keyboard imput. Click anywhere to start.
    
 - Movement: WASD
@@ -26,3 +26,6 @@ A few interesting challenges that arise from the limited API implementation by c
 
 
 More information can be found in [this brilliant post](https://github.com/osnr/horrifying-pdf-experiments/blob/master/README.md) by [Omar Rizwan](https://github.com/osnr) which has been the main source for this project. I encourage the curious reader to go check it out.
+
+### Bugs:
+Sometimes it will fail to eat the apple while taking a turn in that same square. It seems to happen more often near the edges. The reason is unknown and so is the answer.
