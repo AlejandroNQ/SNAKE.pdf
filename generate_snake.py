@@ -15,7 +15,6 @@ CANVAS_BOTTOM = PAGE_HEIGHT - CANVAS_HEIGHT
 
 APPLE_WIDTH = 18
 APPLE_HEIGHT = 18
-APPLE_OFFSET_BOTTOM = CANVAS_BOTTOM + 10
 
 HEAD_WIDTH = 18
 HEAD_HEIGHT = 18
@@ -39,20 +38,25 @@ BRICK_OFFSET_LEFT = 100
 fields = []
 
 # User won't see this default value; it gets set in JS.
-fields.append(make_field(
-    'countdown', x=280, y=650,
+pause = make_field(
+    'countdown',
+    x=(PAGE_WIDTH-300)/2, y=CANVAS_BOTTOM + 250,
     width=300, height=100,
     r=1, g=1, b=1,
     value='Open in Chrome!'
-))
+)
+pause.AA = PdfDict()
+pause.AA.Fo = make_js_action("""
+global.paused = false;
+""")
+fields.append(pause)
 
-apple = make_field(
+fields.append(make_field(
     'apple',
     x=400, y=CANVAS_BOTTOM + 300,
     width=APPLE_WIDTH, height=APPLE_HEIGHT,
     r=1.0, g=0.1, b=0.1
-)
-fields.append(apple)
+))
 
 for c in range(0, BRICK_COLUMN_COUNT):
     for r in range(0, BRICK_ROW_COUNT):
@@ -66,144 +70,49 @@ for c in range(0, BRICK_COLUMN_COUNT):
         )
         fields.append(brick)
 
-head = make_field(
+fields.append(make_field(
     'head',
     x=140, y=CANVAS_BOTTOM + 300,
     width=HEAD_WIDTH, height=HEAD_HEIGHT,
     r=0.0, g=0.5, b=0.0
-)
-fields.append(head)
+))
 
-score = make_field(
+fields.append(make_field(
     'score',
     x=0, y=PAGE_HEIGHT - 50,
     width=90, height=30,
     r=0.9, g=0.9, b=0.9
-)
-fields.append(score)
-speed= make_field(
+))
+fields.append(make_field(
     'speed',
-    x=400, y=190,
-    width=80, height=40,
+    x=0, y=PAGE_HEIGHT - 100,
+    width=90, height=30,
     r=0.9, g=0.9, b=0.9
-)
-fields.append(speed)
-#speed down
-speedctlr = make_field(
-    'control' + str(5),
-    x=350, y=190,
-    width=40, height=40,
+))
+#KeyBoard Imput
+fields.append(make_field(
+    'control',
+    x=100, y=CANVAS_BOTTOM - 10,
+    width=400, height=100,
     r=0.8, g=0.8, b=1,
-    value='<'
-)
-speedctlr.AA = PdfDict()
-speedctlr.AA.E = make_js_action("""
-if (global.speed <= 1000) global.speed = global.speed + 25;
-""")
-fields.append(speedctlr)
-#speed up
-speedctlr = make_field(
-    'control' + str(6),
-    x=490, y=190,
-    width=40, height=40,
-    r=0.8, g=0.8, b=1,
-    value='>'
-)
-speedctlr.AA = PdfDict()
-speedctlr.AA.E = make_js_action("""
-if (global.speed >= 30) global.speed = global.speed - 25;
-""")
-fields.append(speedctlr)
-
-#up
-band = make_field(
-    'control' + str(0),
-    x=150, y=180,
-    width=60, height=60,
-    r=0.8, g=0.8, b=1,
-    value=' ^'
-)
-band.AA = PdfDict()
-band.AA.E = make_js_action("""
-if (global.dir != 0) global.dir = %d;
-""" % 0)
-
-fields.append(band)
-#down
-band = make_field(
-    'control' + str(1),
-    x=150, y=60,
-    width=60, height=60,
-    r=0.8, g=0.8, b=1,
-    value=' v'
-)
-band.AA = PdfDict()
-band.AA.E = make_js_action("""
-if (global.dir != 0) global.dir = %d;
-""" % 1)
-
-fields.append(band)
-#left
-band = make_field(
-    'control' + str(2),
-    x=90, y=120,
-    width=60, height=60,
-    r=0.8, g=0.8, b=1,
-    value='<'
-)
-band.AA = PdfDict()
-band.AA.E = make_js_action("""
-if (global.dir != 3) global.dir = %d;
-""" % 2)
-
-fields.append(band)
-#right
-band = make_field(
-    'control' + str(3),
-    x=210, y=120,
-    width=60, height=60,
-    r=0.8, g=0.8, b=1,
-    value='>'
-)
-band.AA = PdfDict()
-band.AA.E = make_js_action("""
-if (global.dir != 2) global.dir = %d;
-""" % 3)
-
-fields.append(band)
-#PAUSE
-band = make_field(
-    'control' + str(4),
-    x=155, y=125,
-    width=50, height=50,
-    r=0.8, g=0.8, b=1,
-    value=''
-)
-band.AA = PdfDict()
-band.AA.Fo = make_js_action("""
-if (global.count < 0) global.paused = !global.paused;
-""")
-
-fields.append(band)
-
-
-board = make_field(
+    value='CLICK HERE'
+))
+fields.append(make_field(
     'board',
     x=100, y=CANVAS_BOTTOM + 100,
     width=BRICK_COLUMN_COUNT*(BRICK_WIDTH + BRICK_PADDING),
     height=BRICK_ROW_COUNT*(BRICK_HEIGHT + BRICK_PADDING),
     r=0.8, g=0.8, b=0.8
-)
-fields.append(board)
+))
 
-# See `breakout.js`: used to force rendering cleanup in Chrome.
+# See `snake_KBI.js`: used to force rendering cleanup in Chrome.
 fields.append(make_field(
     'whole', x=0, y=CANVAS_BOTTOM,
     width=CANVAS_WIDTH, height=CANVAS_HEIGHT,
     r=1, g=1, b=1
 ))
 
-with open('snake.js', 'r') as js_file:
+with open('snake_KBI.js', 'r') as js_file:
     script = js_file.read()
 
 # Share our constants with the JS script.
@@ -213,7 +122,6 @@ var CANVAS_HEIGHT = %(CANVAS_HEIGHT)s;
 var CANVAS_BOTTOM = %(CANVAS_BOTTOM)s;
 var APPLE_WIDTH = %(APPLE_WIDTH)s;
 var APPLE_HEIGHT = %(APPLE_HEIGHT)s;
-var APPLE_OFFSET_BOTTOM = %(APPLE_OFFSET_BOTTOM)s;
 var HEAD_WIDTH = %(HEAD_WIDTH)s;
 var HEAD_HEIGHT = %(HEAD_HEIGHT)s;
 var BRICK_ROW_COUNT = %(BRICK_ROW_COUNT)s;
@@ -231,12 +139,19 @@ BT
 /F1 32 Tf
 150 700 Td (SNAKE.pdf) Tj
 /F2 16 Tf
-320 -550 Td (Autor:) Tj
+320 -575 Td (Author:) Tj
 /F3 12 Tf
-60 -18  Td (Alejandro) Tj
-6 -18  Td (Navarro) Tj
-2 -18  Td (Quijada) Tj
+60  -18   Td (Alejandro) Tj
+6   -18   Td (Navarro) Tj
+2   -18   Td (Quijada) Tj
 -150 -22  Td (Alejandro.cuenta.formal@gmail.com) Tj
+/F2 16 Tf
+-320 76    Td (Controls:) Tj
+/F3 12 Tf
+40  -18   Td (Movement:         WASD) Tj
+0   -18   Td (Speed control:    + -) Tj
+0   -18   Td (Pause:                SPACE BAR) Tj
+0   -18   Td (Unpause:            Click "Paused") Tj
 ET
 """
 
