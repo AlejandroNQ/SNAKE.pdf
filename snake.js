@@ -6,9 +6,8 @@ var y;
 var apple_x;
 var apple_y;
 
-var delay;
-
-var controls;
+var control;
+var board;
 var bricks;
 
 function init() {
@@ -16,9 +15,12 @@ function init() {
   // so head it off here.
   if (global.initialized) return;
   global.initialized = true;
-
-  var countdownField = this.getField('countdown');
 	
+	control = this.getField('control');
+	board = this.getField('board');
+  
+	control.display = display.visible;
+	control.value = 'CLICK HERE';
 	
 	score = 0;
   
@@ -28,30 +30,17 @@ function init() {
   apple_x = BRICK_OFFSET_LEFT + 360;
   apple_y = BRICK_OFFSET_BOTTOM + 200;
 	
-	controls = [];
-  bricks = [];
+	bricks = [];
   
   global.count = 3;
 
   global.dir = 3;
-  global.speed = 200;
+  global.speed = 5;	// squares/s
   global.paused = false;
 
-  initBricks();
-
-  for (var i = 0; i < 7; i++) {
-    controls[i] = this.getField('control' + i);
-  //	controls[i].display = display.visible;
-  }
-	controls[0].value = ' ^ ';
-	controls[1].value = ' v ';
-	controls[2].value = '  < ';
-	controls[3].value = '  > ';
-	controls[4].value = '';
-	controls[5].value = '  < ';
-	controls[6].value = '  > ';
-	
   countdown();
+	
+  initBricks();
 }
 
 function initBricks() {
@@ -86,6 +75,7 @@ function collisionDetection() {
 				apple_y = 200 + BRICK_OFFSET_BOTTOM;
 				
 				global.dir = 3;
+				global.speed = 5;
 				
 				//wipes the board
 				for (var c = 0; c < BRICK_COLUMN_COUNT; c++) {
@@ -149,7 +139,7 @@ function drawBricks() {
 
 var scoreField = this.getField('score');
 function drawScore() {
-  scoreField.value = " Score: " + score;
+  scoreField.value =  'Score: ' + score;
 }
 var speedField = this.getField('speed');
 function drawSpeed() {
@@ -163,9 +153,44 @@ function draw() {
     countdownField.value = 'Paused';
     return;
   }
-
+	
   countdownField.display = display.hidden;
-  
+	
+
+	//keyboard imput
+	board.setFocus();
+	switch (control.valueAsString.slice(0,1)){
+		case '+': //speed up
+			if (global.speed < 20) global.speed = global.speed + 1;
+			break;
+		case '-': //speed down
+			if (global.speed > 1) global.speed = global.speed - 1;
+			break;
+		case 'w': //up
+		case 'W': //up
+			if (global.dir != 1) global.dir = 0;
+			break;
+		case 'a': //left
+		case 'A': //left
+			if (global.dir != 3) global.dir = 2;
+			break;
+		case 's': //down
+		case 'S': //down
+			if (global.dir != 0) global.dir = 1; 
+			break;
+		case 'd': //right
+		case 'D': //right
+			if (global.dir != 2) global.dir = 3;
+			break;
+		case ' ': //pause
+			global.paused = !global.paused;
+			break;
+	}
+  drawScore();
+	control.value = '';
+	control.setFocus();
+
+
   //moves head
 	var dx = 0;
 	var dy = 0;
@@ -187,13 +212,13 @@ function draw() {
   y += dy * (BRICK_HEIGHT + BRICK_PADDING);
 
 
+	//draws stuff
   drawBricks();
   drawApple();
   drawHead();
-  drawScore();
   drawSpeed();
 
-
+	
 	collisionDetection();
 
 	
@@ -220,15 +245,14 @@ function wrappedDraw() {
     whole.display = display.hidden;
 
   } catch (e) {
-    app.alert(e.toString())
+    app.alert(e.toString() + e.lineNumber.toString())
   }
 	
-	app.setTimeOut('wrappedDraw()', global.speed);
+	app.setTimeOut('wrappedDraw()', 1000/global.speed);
 }
 
 function start() {
-  // TODO Some kind of speed regulation.
-	wrappedDraw();
+  wrappedDraw();
 }
 
 function countdown() {
