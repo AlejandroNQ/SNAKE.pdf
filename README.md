@@ -16,6 +16,12 @@ The game itself is (mostly) coded in JavaScript using [Adobe's JS API](https://w
 - Speed down: -
 
 
+### Keyboard input
+Adobe's JS API has no way of reading keyboard input directly (the same way it's got no way of reading mouse coordinates), however, in much the same way as with the mouse, there are some tricks avaliable. Every element in the game is a text field (because they happen to be one of the few objects which allow API interaction), in particular, you can write on them and, crucially, their value can be read in JS. 
+
+Although, in principle, the value of a field remains unchanged untill the input is commited, which is usually done by pressing enter, although clicking outside or just pressing tab work as well. In order to read near real time KB input we need some way to force commitment periodically. That can be easily archived by forcing focus loss (focussing on another field). After that, it's just a matter of reading the new value, erasing it and forcing focus onto the input field again (I guess you could get better results using it in combination with the KewDown event but I find it to be unnecesary for this application). Since the focus is selected by the game, the input field can be of size 0 which is convenient beacuse it can be distracting otherwise.
+
+
 ### PDF implementation:
 The embeding of the game inside a pdf file is probably the most interesting aspect of this whole project. It could be done simply by hand (uncompressed unprotected pdf files are actually quite simple) but it would require calculating byte offsets by hand which is, to say the least, a tedious task. Here, it's been done with [a python script](https://github.com/AlejandroNQ/SNAKE.pdf/blob/main/generate_snake.py) using the library [pdfrw](https://github.com/pmaupin/pdfrw) (and [a custom module](https://github.com/osnr/horrifying-pdf-experiments/blob/master/generate.py) by [Omar Rizwan](https://github.com/osnr)).
 
@@ -29,3 +35,5 @@ More information can be found in [this brilliant post](https://github.com/osnr/h
 
 ### Bugs:
 Sometimes it will fail to eat the apple while taking a turn in that same square. It seems to happen more often near the edges. The reason is unknown and so is the answer.
+
+Also, there's a few places where the code could be inplemented much more efficiently, maybe one day I'll get around and do it. But so far I'm quite pleased with the result. I was just looking for a proof of concept kind of thing and ended up with quite a playable game. I know I'll be plying it quite a bit XD.
